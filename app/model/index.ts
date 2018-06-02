@@ -7,8 +7,7 @@ export let sunflower = new Sequlize("sunflower", "misheng", "misheng", {
     max: 5
   },
   define: {
-    underscored: true,
-
+    underscored: true
   }
 });
 
@@ -26,13 +25,13 @@ import { WxInfo } from "./wx-info";
 import { User } from "./user";
 import { SmsRecord } from "./sms_record";
 import { SmsInfo } from "./sms_info";
-import { SyncUser } from './sync-users';
+import { SyncUser } from "./sync-users";
+import { Employee } from "./employee";
 
 // customer model
 export let materialModel = Material(sunflower);
 export let cloudinaryImageModel = CloudinaryImage(sunflower);
 export let ossFileModel = OSSFile(sunflower);
-
 
 export let couponClaimModel = CouponClaim(sunflower);
 export let syncUserModel = SyncUser(sunflower);
@@ -45,3 +44,4 @@ export let wxUserModel = WxInfo(sunflower);
 export let userModel = User(sunflower);
 export let smsRecordModel = SmsRecord(sunflower);
 export let smsInfoModel = SmsInfo(sunflower);
+export let employeeModel = Employee(sunflower);

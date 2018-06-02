@@ -46,3 +46,9 @@ export enum SystemActionState {
   FenxiaoSubmitShopPassAction = 1,
   FenxiaoSubmitShopFailAction
 }
+
+export enum UserType {
+  Shop = 1,
+  Employee,
+  Customer
+}

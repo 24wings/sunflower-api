@@ -30,4 +30,4 @@ export let Material = (database: Sequelize) => {
   );
 
   return MaterialModel;
-}; 
+};

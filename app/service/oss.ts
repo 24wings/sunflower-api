@@ -1,5 +1,5 @@
 import { Service } from "egg";
-import { IOSSFile } from "../model/oss-file";
+// import { IOSSFile } from "../oss-file";
 import db = require("../model");
 export default class OSS extends Service {
   async put(filename: string, base64: string) {
@@ -18,8 +18,8 @@ export default class OSS extends Service {
     // let { ctx } = this;
     let filename = `/images/` + Date.now() + ".png";
     let response: OSSUploadResponse = await this.put(filename, base64);
-    // console.log(ctx.model["common"]);
-    return db.ossFileModel.create({
+    // console.log(ctx.["common"]);
+    return db.ossFile.create({
       url: response.url,
       name: filename,
       size: response.res.size,

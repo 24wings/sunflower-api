@@ -19,11 +19,11 @@ export default class Coupon extends Service {
   ) {
     let isDebug = true;
     console.log(`调试模式${isDebug} 手机号 ${phone}`);
-    let rules = await db.couponRuleRealModel.findAll({
+    let rules = await db.couponRuleReal.findAll({
       where: { shop_id },
       limit: 20
     });
-    let shop = await db.shopModel.findOne({ where: { shop_id } });
+    let shop = await db.shop.findOne({ where: { shop_id } });
     let claims: any[] = [];
     console.log(
       `准备开始送券之旅`,
@@ -32,7 +32,7 @@ export default class Coupon extends Service {
     );
     for (let rule of rules) {
       console.log(`可分享${rule.can_share}`, `可注册获得${rule.reg_give}`);
-      let tickets = await db.couponRealModel.findAll({
+      let tickets = await db.couponReal.findAll({
         where: {
           shop_id,
           coupon_id: rule.coupon_id
@@ -42,7 +42,7 @@ export default class Coupon extends Service {
         // 1.判断优惠券是否过期
         let isValidate =
           new Date(ticket.start_date).getTime() +
-            ticket.valid_days * 24 * 60 * 60 * 1000 >
+          ticket.valid_days * 24 * 60 * 60 * 1000 >
           new Date().getTime();
         console.log(`是否有效券` + isValidate);
         if (isValidate) {
@@ -50,7 +50,7 @@ export default class Coupon extends Service {
           // 分享券
           if (rule.can_share == 1 && mode == 1) {
             console.log(`开始分享有效券`, userid);
-            let claim = await db.couponClaimModel.create({
+            let claim = await db.couponClaim.create({
               shop_id: shop_id,
               coupon_id: coupon_id,
               member_id: userid,
@@ -73,7 +73,7 @@ export default class Coupon extends Service {
           }
           if (rule.reg_give == 1 && mode == 0) {
             console.log("赠送注册券成功");
-            let claim = await db.couponClaimModel.create({
+            let claim = await db.couponClaim.create({
               shop_id: shop_id,
               coupon_id: coupon_id,
               member_id: userid,

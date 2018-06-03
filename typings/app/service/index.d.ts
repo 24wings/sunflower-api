@@ -8,6 +8,7 @@ import Mns from '../../../app/service/mns';
 import Oss from '../../../app/service/oss';
 import Qrcode from '../../../app/service/qrcode';
 import Shop from '../../../app/service/shop';
+import SystemModule from '../../../app/service/system-module';
 import Test from '../../../app/service/Test';
 import Wechat from '../../../app/service/wechat';
 
@@ -20,6 +21,7 @@ declare module 'egg' {
     oss: Oss;
     qrcode: Qrcode;
     shop: Shop;
+    systemModule: SystemModule;
     test: Test;
     wechat: Wechat;
   }

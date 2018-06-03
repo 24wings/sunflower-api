@@ -1,3 +1,22 @@
+/**
+ * 阿里云上传的图片数据库结构
+ */
+interface IOSSFile {
+  /**自定义 bucket 名字 */
+  prefix?: string;
+  bucket?: string;
+  name?: string;
+  url?: string;
+  requestUrls?: string[];
+  remotePort?: number;
+  rt?: number;
+  statusCode?: number;
+  status?: number;
+  remoteAddress?: string;
+  size: number;
+  shop_id?: number;
+}
+
 interface IEmployee {
   shop_id: number;
   employee_id?: number;

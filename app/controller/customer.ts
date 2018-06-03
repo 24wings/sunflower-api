@@ -42,7 +42,7 @@ export default class Customer extends Controller {
     async getHome() {
         let { ctx } = this;
         let { reward_value, material_id } = ctx.query;
-        let material = await db.materialModel.findById(material_id);
+        let material = await db.material.findById(material_id);
         await this.ctx.render("index", { reward_value, material });
     }
     async getAppWebsite() {
@@ -59,7 +59,7 @@ export default class Customer extends Controller {
 
         let { code, material_id } = ctx.query;
 
-        let material = await db.materialModel.findById(material_id);
+        let material = await db.material.findById(material_id);
 
         console.log(material_id, material);
         if (!code) {
@@ -80,7 +80,7 @@ export default class Customer extends Controller {
             left join customer.materials on coupon_real.coupon_id= customer.materials.coupon_id 
             left join m2centraldb.user on user.user_id = m2centraldb.coupon_real.shop_id
            where coupon_real.shop_id = ${material.shopuser_id} `);
-                let openIdWxUser = await db.wxUserModel.findOne({
+                let openIdWxUser = await db.wxUser.findOne({
                     where: { openid: weUser.openid }
                 });
                 if (result[0]) {
@@ -173,15 +173,15 @@ export default class Customer extends Controller {
         //  *
         //  *
         //  */
-        // let material = await db.materialModel.findById(material_id);
+        // let material = await db.material.findById(material_id);
         // let user: any;
-        // user = await db.userModel.findOne({ where: { mobi: phone } });
+        // user = await db.user.findOne({ where: { mobi: phone } });
         // if (material) {
         //     if (this.service.common.regexp.phone.test(phone) && phone) {
         //         // 1. 判断openid 有没有该wx_user ,没有则创建 user_id
         //         var newWxUser: any;
 
-        //         let openIdWxUser = await db.wxUserModel.findOne({
+        //         let openIdWxUser = await db.wxUser.findOne({
         //             where: { phone, signup_shop_id: material.shopuser_id }
         //         });
 
@@ -207,7 +207,7 @@ export default class Customer extends Controller {
         //             console.log(`newId:`, newId);
 
         //             if (!user) {
-        //                 newUser = await db.userModel.create({
+        //                 newUser = await db.user.create({
         //                     user_id: newId,
         //                     user_name: nickname ? nickname : "微信用户",
         //                     nick_name: nickname,
@@ -220,7 +220,7 @@ export default class Customer extends Controller {
         //             }
         //             if (!openIdWxUser) {
         //                 // 2. 判断有没有shop_id 和openid 联合起来的店铺
-        //                 newWxUser = await db.wxUserModel.create({
+        //                 newWxUser = await db.wxUser.create({
         //                     phone,
         //                     password: "123456",
         //                     openid,
@@ -239,17 +239,17 @@ export default class Customer extends Controller {
         //             // newWxUser = openIdUser;
         //         } else {
         //             if (openIdWxUser) {
-        //                 openIdUser = await db.userModel.findOne({
+        //                 openIdUser = await db.user.findOne({
         //                     where: { user_id: openIdWxUser.user_id }
         //                 });
         //             }
         //         }
-        //         let openidShopWxUser = await db.wxUserModel.findOne({
+        //         let openidShopWxUser = await db.wxUser.findOne({
         //             where: { signup_shop_id: material.shopuser_id, openid }
         //         });
         //         // 若没有,则注册, 有则直接进入下个页面
         //         if (!openidShopWxUser) {
-        //             await db.wxUserModel.create({
+        //             await db.wxUser.create({
         //                 phone,
         //                 password: "123456",
         //                 openid,
@@ -272,11 +272,11 @@ export default class Customer extends Controller {
         //                 // 分配奖金
         //                 console.log(`新注册了用户,开始分配奖金`, newUser);
 
-        //                 let material: any = await db.materialModel.findById(material_id);
+        //                 let material: any = await db.material.findById(material_id);
         //                 let shareResults;
         //                 let regGiveResults;
         //                 if (material) {
-        //                     let rule = await db.couponRuleRealModel.findOne({
+        //                     let rule = await db.couponRuleReal.findOne({
         //                         where: {
         //                             shop_id: material.shopuser_id,
         //                             coupon_id: material.coupon_id
@@ -287,7 +287,7 @@ export default class Customer extends Controller {
         //                         console.log(`分配rule,`, rule);
         //                         // if (rule.can_share == 1 && shareuser_id) {
         //                         console.log(`分享分配`);
-        //                         let shareUser = await db.wxUserModel.findOne({
+        //                         let shareUser = await db.wxUser.findOne({
         //                             where: { user_id: shareuser_id }
         //                         });
         //                         // 额外分享分配
@@ -314,7 +314,7 @@ export default class Customer extends Controller {
         //                             phone,
         //                             0
         //                         );
-        //                         let firstRule = await db.couponRealModel.findOne({
+        //                         let firstRule = await db.couponReal.findOne({
         //                             where: {
         //                                 coupon_id: regGiveResults[0].coupon_id,
         //                                 shop_id: material.shopuser_id
@@ -378,10 +378,10 @@ export default class Customer extends Controller {
         //  *
         //  *
         //  */
-        // let material = await db.materialModel.findById(material_id);
+        // let material = await db.material.findById(material_id);
         // let user: any;
         // let newWxUser: any;
-        // user = await db.userModel.findOne({ where: { mobi: phone } });
+        // user = await db.user.findOne({ where: { mobi: phone } });
         // if (material) {
         //     if (this.service.common.regexp.phone.test(phone) && phone) {
         //         // let ok = await this.service.alidayu.queryDetail(phone, authcode);
@@ -395,7 +395,7 @@ export default class Customer extends Controller {
         //                 );
         //                 newId = newId[0][0].VAL;
         //                 console.log(`newId:`, newId);
-        //                 user = await db.userModel.create({
+        //                 user = await db.user.create({
         //                     user_id: newId,
         //                     user_name: nickname ? nickname : "微信用户",
         //                     nick_name: nickname,
@@ -406,11 +406,11 @@ export default class Customer extends Controller {
         //                     password: "123456"
         //                 });
         //             }
-        //             let wxUser = await db.wxUserModel.findOne({
+        //             let wxUser = await db.wxUser.findOne({
         //                 where: { phone, signup_shop_id: material.shopuser_id }
         //             });
         //             if (!wxUser) {
-        //                 newWxUser = await db.wxUserModel.create({
+        //                 newWxUser = await db.wxUser.create({
         //                     phone,
         //                     password: "123456",
         //                     openid,
@@ -434,11 +434,11 @@ export default class Customer extends Controller {
         //                 // 分配奖金
         //                 console.log(`新注册了用户,开始分配奖金`, newWxUser);
 
-        //                 let material: any = await db.materialModel.findById(material_id);
+        //                 let material: any = await db.material.findById(material_id);
         //                 let shareResults;
         //                 let regGiveResults;
         //                 if (material) {
-        //                     let rule = await db.couponRuleRealModel.findOne({
+        //                     let rule = await db.couponRuleReal.findOne({
         //                         where: {
         //                             shop_id: material.shopuser_id,
         //                             coupon_id: material.coupon_id
@@ -449,7 +449,7 @@ export default class Customer extends Controller {
         //                         console.log(`分配rule,`, rule);
         //                         // if (rule.can_share == 1 && shareuser_id) {
         //                         console.log(`分享分配`);
-        //                         let shareUser = await db.wxUserModel.findOne({
+        //                         let shareUser = await db.wxUser.findOne({
         //                             where: { user_id: shareuser_id }
         //                         });
         //                         // 额外分享分配
@@ -475,7 +475,7 @@ export default class Customer extends Controller {
         //                             phone,
         //                             0
         //                         );
-        //                         let firstRule = await db.couponRealModel.findOne({
+        //                         let firstRule = await db.couponReal.findOne({
         //                             where: {
         //                                 coupon_id: regGiveResults[0].coupon_id,
         //                                 shop_id: material.shopuser_id
@@ -536,15 +536,15 @@ export default class Customer extends Controller {
         console.log(`create_material`, ctx.request.body);
 
         if (shopuser_id) {
-            let shopuser = await db.shopModel.findOne({
+            let shopuser = await db.shop.findOne({
                 where: { shop_id: shopuser_id }
             });
             if (shopuser) {
-                let exist = await db.materialModel.findOne({
+                let exist = await db.material.findOne({
                     where: { shopuser_id, coupon_id }
                 });
                 if (!exist) {
-                    let newMaterial = await db.materialModel.create({
+                    let newMaterial = await db.material.create({
                         coupon_id,
                         shop_phone: shopuser.telphone,
                         shopuser_id,
@@ -554,7 +554,7 @@ export default class Customer extends Controller {
                     });
                     ctx.body = { ok: true, data: newMaterial };
                 } else {
-                    let update = await db.materialModel.update(
+                    let update = await db.material.update(
                         { home_image_url, ticket_image_url, share_image_url },
                         { where: { shopuser_id, coupon_id } }
                     );
@@ -572,13 +572,13 @@ export default class Customer extends Controller {
         let { material_id } = ctx.query;
 
         if (material_id) {
-            let material = await db.materialModel.findById(material_id);
+            let material = await db.material.findById(material_id);
 
             if (material) {
-                let user = await db.userModel.findOne({
+                let user = await db.user.findOne({
                     where: { user_id: material.shopuser_id }
                 });
-                let shopuser = await db.shopModel.findOne({
+                let shopuser = await db.shop.findOne({
                     where: { shop_id: material.shopuser_id }
                 });
 
@@ -605,9 +605,9 @@ export default class Customer extends Controller {
         let { material_id } = ctx.query;
         let body = ctx.request.body;
         if (material_id) {
-            let material = await db.materialModel.findById(material_id);
+            let material = await db.material.findById(material_id);
             if (material) {
-                await db.materialModel.update(body);
+                await db.material.update(body);
                 ctx.body = { ok: true, data: "更新成功" };
             } else {
                 ctx.body = { ok: false, data: "未知的素材" };
@@ -624,7 +624,7 @@ export default class Customer extends Controller {
                 shop_id
             );
             /**
-             *  await db.materialModel.findAll({
+             *  await db.material.findAll({
               where: { shopuser_id: shop_id }
             });
              */
@@ -642,7 +642,7 @@ export default class Customer extends Controller {
             size = 100;
         }
         if (shop_id && size) {
-            let tickets = await db.couponClaimModel.findAll({
+            let tickets = await db.couponClaim.findAll({
                 where: { shop_id, is_sync: false },
                 limit: size
             });
@@ -663,14 +663,14 @@ export default class Customer extends Controller {
                 );
             let claimIds = (data as any[]).map(claim => claim.claim_id);
             console.log(`claimIdS:`, claimIds);
-            let claims = await db.couponClaimModel.findAll({
+            let claims = await db.couponClaim.findAll({
                 where: {
                     claim_id: {
                         $in: claimIds
                     }
                 }
             });
-            let users = await db.userModel.findAll({
+            let users = await db.user.findAll({
                 where: {
                     user_id: {
                         $in: (data as any).map(claim => claim.member_id)
@@ -689,14 +689,14 @@ export default class Customer extends Controller {
                     );
                 let claimIds = (data as any[]).map(claim => claim.claim_id);
                 console.log(`claimIdS:`, claimIds);
-                let claims = await db.couponClaimModel.findAll({
+                let claims = await db.couponClaim.findAll({
                     where: {
                         claim_id: {
                             $in: claimIds
                         }
                     }
                 });
-                let users = await db.userModel.findAll({
+                let users = await db.user.findAll({
                     where: {
                         user_id: {
                             $in: (data as any).map(claim => claim.member_id)
@@ -715,7 +715,7 @@ export default class Customer extends Controller {
         let { had_sync_ids } = this.ctx.request.body;
         if (!had_sync_ids) had_sync_ids = [];
 
-        let claims = await db.couponClaimModel.findAll({
+        let claims = await db.couponClaim.findAll({
             where: {
                 shop_id,
                 claim_id: {
@@ -730,7 +730,7 @@ export default class Customer extends Controller {
         let { shop_id } = ctx.query;
         let { completeIds } = ctx.request.body;
         if (!completeIds) completeIds = [];
-        let update = await db.couponClaimModel.update(
+        let update = await db.couponClaim.update(
             { is_sync: true },
             {
                 where: {
@@ -751,9 +751,9 @@ export default class Customer extends Controller {
         let { ctx } = this;
         let { material_id, phone } = this.ctx.query;
         console.log(material_id, phone);
-        let material = await db.materialModel.findById(material_id);
+        let material = await db.material.findById(material_id);
         if (material) {
-            let shopSmsInfo = await db.smsInfoModel.findOne({
+            let shopSmsInfo = await db.smsInfo.findOne({
                 where: { shop_id: material.shopuser_id }
             });
             if (shopSmsInfo) {
@@ -772,7 +772,7 @@ export default class Customer extends Controller {
                             detail,
                             detail.SmsSendDetailDTOs.SmsSendDetailDTO
                         );
-                        await db.smsRecordModel.create({
+                        await db.smsRecord.create({
                             mobilenum: phone,
                             shop_id: material.shopuser_id,
                             msg: `您的注册验证码为:${
@@ -805,7 +805,7 @@ export default class Customer extends Controller {
     async isOpenidLogin() {
         let { ctx } = this;
         if (ctx.query.openid) {
-            let wxUser = await db.wxUserModel.findOne({
+            let wxUser = await db.wxUser.findOne({
                 where: { openid: ctx.query.openid }
             });
             console.log(`isWxUserlogin`, !!wxUser, wxUser);

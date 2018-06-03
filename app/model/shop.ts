@@ -6,6 +6,7 @@ export let Shop = (database: Sequelize) => {
     password: STRING,
     shop_id: { type: INTEGER, primaryKey: true },
     shop_name: STRING,
+
     telphone: STRING,
     region: STRING,
     qq: STRING,
@@ -13,10 +14,10 @@ export let Shop = (database: Sequelize) => {
     addr: STRING,
     referrer: STRING,
     servicer: STRING,
-    regist_time: DATE,
+
     active_status: { type: BOOLEAN, defaultValue: false },
     active_time: DATE,
-    telephone: STRING,
+
     legal_person_name: STRING,
     legal_person_mobi: STRING,
     boss_name: STRING,

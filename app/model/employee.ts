@@ -3,8 +3,10 @@ import { Sequelize, STRING, INTEGER, DATE, Instance } from "sequelize";
 type IEmployeeInstance = Instance<IEmployee> & IEmployee;
 export let Employee = (database: Sequelize) => {
   const employee = database.define<IEmployeeInstance, IEmployee>("employee", {
-    shop_id: INTEGER,
+    shop_id: { type: INTEGER, allowNull: false, },
     employee_id: { type: INTEGER, primaryKey: true, autoIncrement: true },
+    department: STRING,
+    job: STRING,
     name: STRING,
     nickname: STRING,
     role_code: INTEGER,
@@ -15,12 +17,17 @@ export let Employee = (database: Sequelize) => {
     password: STRING,
     password_hash: STRING,
     shop_code: STRING,
-    photo: STRING,
+    images: {
+      type: STRING,
+      get() {
+        return (this as any).getDataValue('images') ? (this as any).getDataValue('images').split(',') : []
+      }
+    },
     photo_path: STRING,
 
     male: STRING,
     nation: STRING,
-    birthday: STRING,
+    birthday: DATE,
     marital: STRING,
     native_place: STRING,
     sex: STRING,
@@ -49,7 +56,8 @@ export let Employee = (database: Sequelize) => {
     service_id: STRING,
     service_flag: STRING,
     service_end_date: DATE
-  });
+  },
+  );
 
   return employee;
 };

@@ -1,7 +1,8 @@
 interface IEmployee {
   shop_id: number;
   employee_id?: number;
-
+  department: string;
+  job: string;
   name;
   /*** 昵称*/
   nickname?;
@@ -15,6 +16,9 @@ interface IEmployee {
   phone;
   /*** 激活标志,1为正常会员注册激活标识，100以上为平台使用，101为平台雇佣推广人员*/
   active_flg?;
+  /**
+   * 性别 1男 2女
+   */
   sex: string;
   qq?: string;
   /**
@@ -30,7 +34,7 @@ interface IEmployee {
   /**
    * 头像照片
    */
-  photo?: string;
+  images?: string | string[];
   /**
    * 照片路径
    */
@@ -113,6 +117,7 @@ interface IShop {
   shop_id?: number;
   shop_name: string;
   telphone: string;
+  boss_mobi: string;
   qq: string;
   phone: string;
   password: string;

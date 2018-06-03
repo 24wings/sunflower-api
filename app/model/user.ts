@@ -24,7 +24,7 @@ interface IUser {
   user_name: string;
 
   user_id?: number;
-  mobi?: string;
+  phone?: string;
   nation?: string;
   region: string;
   city: string;
@@ -51,9 +51,9 @@ export let User = (database: Sequelize) => {
     birthday: DATE,
     photos: STRING,
     marital: BOOLEAN,
-    native_place: STRING,
+    // native_place: STRING,
     education: STRING,
-    mobi: STRING,
+
     id_card_addr: STRING,
     region: STRING,
     city: STRING,

@@ -15,6 +15,18 @@ export default class Shop extends Controller {
     });
     this.ctx.body = { ok: !!shop, data: shop ? shop : "用户名或密码错误" };
   }
+  async getShopTodayCustomers() {
+    let { ctx } = this;
+    let { shop_id } = ctx.query;
+    /**
+     * 今天的所有订单
+     */
+    let orders = await db.shopOrderReal.findAll({
+      where: { shop_id, deal_date: new Date(2017, 4, 25, 0, 0, 0) }
+    });
+    let orderIds = orders.map(order => order.order_id);
+    this.ctx.body = { ok: true, data: { orders, orderIds } };
+  }
 
   /**
    * 分页获取店铺员工
@@ -24,8 +36,8 @@ export default class Shop extends Controller {
     let { page, pageSize, shop_id } = ctx.query;
     if (!page) page = 0;
     if (!pageSize) pageSize = 10;
-    if (typeof page == 'string') page = parseInt(page);
-    if (typeof pageSize == 'string') pageSize = parseInt(pageSize);
+    if (typeof page == "string") page = parseInt(page);
+    if (typeof pageSize == "string") pageSize = parseInt(pageSize);
     let result = await db.employee.findAndCountAll({
       where: { shop_id },
       limit: pageSize,
@@ -37,7 +49,7 @@ export default class Shop extends Controller {
   async createEmployee() {
     let { ctx } = this;
     let { shop_id } = ctx.query;
-    console.log(ctx.headers)
+    console.log(ctx.headers);
 
     let {
       password,
@@ -94,14 +106,14 @@ export default class Shop extends Controller {
           job,
           emergency_contact,
           emergency_contact_phone,
-          images: images.join(','),
+          images: images.join(","),
           emergency_contact_relationship
         };
         newEmployee = await db.employee.create(newEmployee);
         this.ctx.body = { ok: true, data: newEmployee };
       }
     } else {
-      this.ctx.body = { ok: false, data: '信息不全' }
+      this.ctx.body = { ok: false, data: "信息不全" };
     }
   }
 
@@ -143,7 +155,7 @@ export default class Shop extends Controller {
     if (ok) {
       /**
        *  商户用户
-       * 
+       *
        */
       let shopUser;
       /**
@@ -184,7 +196,7 @@ export default class Shop extends Controller {
         });
         this.ctx.body = { ok: true, data: newShop, user: shopUser };
       } else {
-        this.ctx.body = { ok: false, data: "该手机号已注册为商家" }
+        this.ctx.body = { ok: false, data: "该手机号已注册为商家" };
       }
     } else {
       this.ctx.body = { ok: false, data: "手机号验证码错误" };
@@ -199,12 +211,20 @@ export default class Shop extends Controller {
 
   async getShopEmployeeJobCategory() {
     let { shop_id } = this.ctx.query;
-    let result = await db.shop.find({ distinct: true, attributes: ['shop_id'], where: { shop_id } });
+    let result = await db.shop.find({
+      distinct: true,
+      attributes: ["shop_id"],
+      where: { shop_id }
+    });
     this.ctx.body = { ok: true, data: result };
   }
   async getShopEmployeeDepartment() {
     let { shop_id } = this.ctx.query;
-    let result = await db.employee.find({ distinct: true, attributes: ['shop_id'], where: { shop_id } });
+    let result = await db.employee.find({
+      distinct: true,
+      attributes: ["shop_id"],
+      where: { shop_id }
+    });
     this.ctx.body = { ok: true, data: result };
   }
 

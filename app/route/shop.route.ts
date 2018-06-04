@@ -39,7 +39,12 @@ let shopApi = {
   /**
    * ?shop_id
    */
-  employeeDepartmentCategory: "api/shop/employee/department-category"
+  employeeDepartmentCategory: "api/shop/employee/department-category",
+  /**
+   * 获取商户的今日业绩统计
+   * ?shop_id
+   */
+  getShopBussiness: "/api/shop/bussiness"
 };
 
 module.exports = (app: Application) => {
@@ -52,4 +57,5 @@ module.exports = (app: Application) => {
     .get(shopApi.shopSignupAuthCode, shop.getAuthCode)
     .get(shopApi.employeeDepartmentCategory, shop.getShopEmployeeDepartment)
     .get(shopApi.employeeJobCategory, shop.getShopEmployeeJobCategory)
+    .get(shopApi.getShopBussiness, shop.getShopTodayCustomers);
 };

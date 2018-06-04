@@ -204,3 +204,105 @@ interface IShop {
   update_at?: Date;
   created_at?: Date;
 }
+
+/**
+ * 商户子订单记录
+ */
+interface ISubOrderReal {
+  sub_order_id;
+  order_id;
+  room_id;
+  payed_flg;
+  staff_id;
+  staff_male;
+  hand_card_id;
+  sub_order_type;
+  sub_order_name;
+  item_id;
+  start_time;
+  end_time;
+  price;
+  number;
+  sub_order_date;
+  sub_order_time;
+  op_id;
+  sale_id;
+  turn_method;
+  spend_amount;
+  set_off_flag;
+  reserve_str;
+  clock_status;
+  via_flag;
+  shop_id;
+}
+
+interface IShopOrderDetail {
+  order_id;
+  deal_date?: Date;
+  deal_time;
+  op_id;
+  staff_id;
+  male_cus;
+  major_item_desc;
+  item_desc;
+  commodity_desc;
+  card_desc;
+  price_sum;
+  cash;
+  unionpay;
+  pet_card;
+  coupon;
+  groug;
+  tally;
+  other;
+  free_flg;
+  member_card_id;
+  comments;
+  room_id;
+  female_cus;
+  op_time;
+  shop_id;
+}
+
+/**
+ * 会员消费记录信息
+ */
+interface IMemberRecordReal {
+  member_record_id;
+  member_id;
+  member_card_id;
+  member_deal_type;
+  amount;
+  balance;
+  integral;
+  order_id;
+  deal_date;
+  deal_time;
+  op_id;
+  present;
+  comm;
+  shop_id;
+}
+
+interface IMemberInfoReal {
+  member_id;
+  member_card_id;
+  passwd;
+  member_card_sn;
+  status;
+  balance;
+  member_name;
+  male;
+  integral;
+  id_card;
+  qq;
+  email;
+  birthday;
+  mobiphones;
+  salesman_id;
+  op_date;
+  op_time;
+  op_id;
+  end_time;
+  shop_id;
+}

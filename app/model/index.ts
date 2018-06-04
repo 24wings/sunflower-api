@@ -10,6 +10,18 @@ export let sunflower = new Sequlize("sunflower", "misheng", "misheng", {
     underscored: true
   }
 });
+export let m2centraldb = new Sequlize("m2centraldb", "misheng", "misheng", {
+  host: "221.234.36.118",
+  dialect: "mysql",
+  pool: {
+    max: 5
+  },
+  define: {
+    underscored: true,
+    createdAt: false,
+    updatedAt: false
+  }
+});
 
 import { CloudinaryImage } from "./cloudinary-image";
 import { Material } from "./material";
@@ -24,13 +36,16 @@ import { SmsRecord } from "./sms_record";
 import { SmsInfo } from "./sms_info";
 import { SyncUser } from "./sync-users";
 import { Employee } from "./employee";
-import { Role } from './role';
-import { Article } from './article';
-import { Categroy } from './article-category';
-import { Comment } from './comment';
-import { Module } from './module';
-
-// database sunflower 
+import { Role } from "./role";
+import { Article } from "./article";
+import { Categroy } from "./article-category";
+import { Comment } from "./comment";
+import { Module } from "./module";
+import { SubOrderReal } from "./sub-order-real";
+import { MemberInfoReal } from "./member-info-real";
+import { MemberRecordReal } from "./member-record-real";
+import { ShopOrderReal } from "./shop-order-real";
+// database sunflower
 export let material = Material(sunflower);
 export let cloudinaryImage = CloudinaryImage(sunflower);
 export let ossFile = OSSFile(sunflower);
@@ -50,4 +65,9 @@ export let articleCategory = Categroy(sunflower);
 export let comment = Comment(sunflower);
 export let module = Module(sunflower);
 
-export { VerifyStatus } from './article'
+// m2centraldb
+export let subOrderReal = SubOrderReal(m2centraldb);
+export let memberInfoReal = MemberInfoReal(m2centraldb);
+export let memberRecordReal = MemberRecordReal(m2centraldb);
+export let shopOrderReal = ShopOrderReal(m2centraldb);
+export { VerifyStatus } from "./article";

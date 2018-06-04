@@ -13,7 +13,8 @@ export default class Shop extends Controller {
     let shop = await db.shop.findOne({
       where: { shop_id: username, password }
     });
-    this.ctx.body = { ok: !!shop, data: shop ? shop : "用户名或密码错误" };
+    let modules = await db.module.findAll();
+    this.ctx.body = { ok: !!shop, data: shop ? { shop, modules } : "用户名或密码错误" };
   }
   async getShopTodayCustomers() {
     let { ctx } = this;
@@ -21,11 +22,30 @@ export default class Shop extends Controller {
     /**
      * 今天的所有订单
      */
-    let orders = await db.shopOrderReal.findAll({
-      where: { shop_id, deal_date: new Date(2017, 4, 25, 0, 0, 0) }
+    let todayOrders = await db.shopOrderReal.findAll({
+      where: { shop_id, deal_date: new Date(2017, 4, 24).format('yyyy-MM-dd') }
     });
-    let orderIds = orders.map(order => order.order_id);
-    this.ctx.body = { ok: true, data: { orders, orderIds } };
+    let todayOrderIds = todayOrders.map(order => order.order_id);
+    // let todayMemberIds =todayOrders.map(order=>order.me)
+    let todayMemberCardIds = todayOrders.map(order => order.member_card_id);
+    let todayMembers = await db.memberRecordReal.findAll({
+      where: {
+        [Sequelize.Op.or]: [{ member_card_id: { $in: todayMemberCardIds } }, { order_id: { $in: todayOrderIds } }]
+      }
+    });
+
+    let orderGroup = todayOrders.map(order => {
+
+      let memberRecord = todayMembers.find(member => member.member_card_id == order.member_card_id || member.order_id + '' == order.order_id + '');
+      return {
+        memberRecord,
+        order
+      }
+    })
+
+
+
+    this.ctx.body = { ok: true, data: { totalOrderNum: todayOrders.length, totalMemberNum: todayMembers.length, todayOrders, todayMembers, orderGroup } };
   }
 
   /**
@@ -318,7 +338,7 @@ where coupon_real.shop_id = ${shop_id}
     this.ctx.body = { ok: true, data: result };
   }
   async getRoleAll() {
-    let result = this.service.systemModule.getRoleAll();
+    let result = await this.service.systemModule.getRoleAll();
     this.ctx.body = { ok: true, data: result };
   }
   async deleteUser() {

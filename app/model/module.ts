@@ -24,7 +24,7 @@ export let Module = (database: Sequelize) => {
     const ModuleModel = database.define<IModuleInstance, IModule>(
         "module",
         {
-            module_id: { type: INTEGER, allowNull: false },
+            module_id: { type: INTEGER, primaryKey: true, allowNull: false },
             name: { type: STRING, allowNull: false },
             parent_id: { type: STRING, allowNull: false },
             created_at: { type: DATE },

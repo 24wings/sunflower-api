@@ -18,6 +18,10 @@ interface Date {
   format: (reg: string) => string;
 }
 
+interface Array {
+  distinct(): any[]
+}
+
 declare module "egg" {
 
 }

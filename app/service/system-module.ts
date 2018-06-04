@@ -23,8 +23,8 @@ export default class extends Service {
 
     async getModulePage(page = 0, pageSize = 10) {
         let list = await db.sunflower.query(
-            `SELECT modules.name,modules.key_word,modules.parent_id ,modules.can_delete,  modules.id ,modules.link,modules.sort,modules.icon_font,m2.name 
-      as parent FROM modules left join modules m2 on modules.parent_id = m2.id limit ${pageSize} offset ${page *
+            `SELECT modules.name,modules.key_word,modules.parent_id ,modules.can_delete,  modules.module_id ,modules.link,modules.sort,modules.icon_font,m2.name 
+      as parent FROM modules left join modules m2 on modules.parent_id = m2.module_id limit ${pageSize} offset ${page *
             pageSize} ;`
         );
         let total = await db.module.count();

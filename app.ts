@@ -1,4 +1,4 @@
-Date.prototype.format = function(fmt) {
+Date.prototype.format = function (fmt) {
   var o = {
     "M+": this.getMonth() + 1, //月份
     "d+": this.getDate(), //日
@@ -24,6 +24,22 @@ Date.prototype.format = function(fmt) {
   }
   return fmt;
 };
+Array.prototype.distinct = function () {
+  var arr: any[] = this as any;
+  var result: any[] = [],
+    i,
+    j,
+    len = arr.length;
+  for (i = 0; i < len; i++) {
+    for (j = i + 1; j < len; j++) {
+      if (arr[i] === arr[j]) {
+        j = ++i;
+      }
+    }
+    result.push(arr[i] as any);
+  }
+  return result;
+}
 
 // app.js
 module.exports = app => {

@@ -31,35 +31,35 @@ export default (appInfo: EggAppConfig) => {
   //   password: "misheng"
   // };
   // config/config.${env}.js
-  config.mysql = {
-    clients: {
-      // clientId, 获取client实例，需要通过 app.mysql.get('clientId') 获取
-      customer: {
-        // host
-        host: "221.234.36.118",
-        // 端口号
-        port: "3306",
-        // 用户名
-        user: "misheng",
-        // 密码
-        password: "misheng",
-        // 数据库名
-        database: "customer"
-      },
-      m2centraldb: {
-        // host
-        host: "221.234.36.118",
-        // 端口号
-        port: "3306",
-        // 用户名
-        user: "misheng",
-        // 密码
-        password: "misheng",
-        // 数据库名
-        database: "m2centraldb"
-      }
-    }
-  };
+  // config.mysql = {
+  //   clients: {
+  //     // clientId, 获取client实例，需要通过 app.mysql.get('clientId') 获取
+  //     customer: {
+  //       // host
+  //       host: "221.234.36.118",
+  //       // 端口号
+  //       port: "3306",
+  //       // 用户名
+  //       user: "misheng",
+  //       // 密码
+  //       password: "misheng",
+  //       // 数据库名
+  //       database: "customer"
+  //     },
+  //     m2centraldb: {
+  //       // host
+  //       host: "221.234.36.118",
+  //       // 端口号
+  //       port: "3306",
+  //       // 用户名
+  //       user: "misheng",
+  //       // 密码
+  //       password: "misheng",
+  //       // 数据库名
+  //       database: "m2centraldb"
+  //     }
+  //   }
+  // };
 
   // config.mongoose = {
   // client: {

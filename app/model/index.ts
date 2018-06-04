@@ -11,7 +11,8 @@ export let sunflower = new Sequlize("sunflower", "misheng", "misheng", {
   }
 });
 export let m2centraldb = new Sequlize("m2centraldb", "misheng", "misheng", {
-  host: "221.234.36.118",
+  // host: "221.234.36.118",
+  host: "47.100.23.203",
   dialect: "mysql",
   pool: {
     max: 5

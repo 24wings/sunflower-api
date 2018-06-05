@@ -5,6 +5,14 @@ import Sequelize = require("sequelize");
 import db = require("../model");
 
 export default class Shop extends Controller {
+  async updateShopLocation() {
+    let updateAction = await db.shop.update(
+      { lat_lng: this.ctx.request.body.lat_lng },
+      { where: { shop_id: this.ctx.query.shop_id } }
+    );
+    this.ctx.body = { ok: true, data: updateAction };
+  }
+
   /**
    * 商户登录
    */
@@ -14,7 +22,10 @@ export default class Shop extends Controller {
       where: { shop_id: username, password }
     });
     let modules = await db.module.findAll();
-    this.ctx.body = { ok: !!shop, data: shop ? { shop, modules } : "用户名或密码错误" };
+    this.ctx.body = {
+      ok: !!shop,
+      data: shop ? { shop, modules } : "用户名或密码错误"
+    };
   }
   async getShopTodayCustomers() {
     let { ctx } = this;
@@ -23,29 +34,42 @@ export default class Shop extends Controller {
      * 今天的所有订单
      */
     let todayOrders = await db.shopOrderReal.findAll({
-      where: { shop_id, deal_date: new Date(2017, 4, 24).format('yyyy-MM-dd') }
+      where: { shop_id, deal_date: new Date(2017, 4, 24).format("yyyy-MM-dd") }
     });
     let todayOrderIds = todayOrders.map(order => order.order_id);
     // let todayMemberIds =todayOrders.map(order=>order.me)
     let todayMemberCardIds = todayOrders.map(order => order.member_card_id);
     let todayMembers = await db.memberRecordReal.findAll({
       where: {
-        [Sequelize.Op.or]: [{ member_card_id: { $in: todayMemberCardIds } }, { order_id: { $in: todayOrderIds } }]
+        [Sequelize.Op.or]: [
+          { member_card_id: { $in: todayMemberCardIds } },
+          { order_id: { $in: todayOrderIds } }
+        ]
       }
     });
 
     let orderGroup = todayOrders.map(order => {
-
-      let memberRecord = todayMembers.find(member => member.member_card_id == order.member_card_id || member.order_id + '' == order.order_id + '');
+      let memberRecord = todayMembers.find(
+        member =>
+          member.member_card_id == order.member_card_id ||
+          member.order_id + "" == order.order_id + ""
+      );
       return {
         memberRecord,
         order
+      };
+    });
+
+    this.ctx.body = {
+      ok: true,
+      data: {
+        totalOrderNum: todayOrders.length,
+        totalMemberNum: todayMembers.length,
+        todayOrders,
+        todayMembers,
+        orderGroup
       }
-    })
-
-
-
-    this.ctx.body = { ok: true, data: { totalOrderNum: todayOrders.length, totalMemberNum: todayMembers.length, todayOrders, todayMembers, orderGroup } };
+    };
   }
 
   /**
@@ -93,7 +117,8 @@ export default class Shop extends Controller {
       introducer,
       department,
       job,
-      images
+      images,
+      role_id
     } = ctx.request.body;
     if (!images) images = [];
 
@@ -127,7 +152,8 @@ export default class Shop extends Controller {
           emergency_contact,
           emergency_contact_phone,
           images: images.join(","),
-          emergency_contact_relationship
+          emergency_contact_relationship,
+          role_id
         };
         newEmployee = await db.employee.create(newEmployee);
         this.ctx.body = { ok: true, data: newEmployee };
@@ -136,7 +162,25 @@ export default class Shop extends Controller {
       this.ctx.body = { ok: false, data: "信息不全" };
     }
   }
+  /**
+   * 更新员工资料
+   */
+  async updateEmployee() {
+    let { shop_id, employee_id } = this.ctx.query;
 
+    if (shop_id) {
+      let updateEmployee = this.ctx.request.body;
+      if (Array.isArray(updateEmployee.images)) {
+        updateEmployee.images = updateEmployee.images.join(",");
+      }
+      let updateAction = await db.employee.update(updateEmployee, {
+        where: { shop_id, employee_id }
+      });
+      this.ctx.body = { ok: true, data: updateAction };
+    } else {
+      this.ctx.body = { ok: false, data: "参数少数" };
+    }
+  }
   /**
    * 商户注册
    */
@@ -302,8 +346,12 @@ where coupon_real.shop_id = ${shop_id}
     this.ctx.body = { ok: true, data: result };
   }
   async getRolePage() {
-    let { page, pageSize } = this.ctx.query;
-    let pageRole = await this.service.systemModule.getRolePage(page, pageSize);
+    let { page, pageSize, shop_id } = this.ctx.query;
+    let pageRole = await this.service.systemModule.getRolePage(
+      shop_id,
+      page,
+      pageSize
+    );
     this.ctx.body = { ok: true, data: pageRole };
   }
   async createRole() {
@@ -338,7 +386,9 @@ where coupon_real.shop_id = ${shop_id}
     this.ctx.body = { ok: true, data: result };
   }
   async getRoleAll() {
-    let result = await this.service.systemModule.getRoleAll();
+    let result = await this.service.systemModule.getRoleAll(
+      this.ctx.query.shop_id
+    );
     this.ctx.body = { ok: true, data: result };
   }
   async deleteUser() {

@@ -46,6 +46,9 @@ import { SubOrderReal } from "./sub-order-real";
 import { MemberInfoReal } from "./member-info-real";
 import { MemberRecordReal } from "./member-record-real";
 import { ShopOrderReal } from "./shop-order-real";
+import { Coupon } from "./coupon";
+import { CouponRule } from "./coupon_rule";
+
 // database sunflower
 export let material = Material(sunflower);
 export let cloudinaryImage = CloudinaryImage(sunflower);
@@ -65,7 +68,8 @@ export let article = Article(sunflower);
 export let articleCategory = Categroy(sunflower);
 export let comment = Comment(sunflower);
 export let module = Module(sunflower);
-
+export let coupon = Coupon(sunflower);
+export let couponRule = CouponRule(sunflower);
 // m2centraldb
 export let subOrderReal = SubOrderReal(m2centraldb);
 export let memberInfoReal = MemberInfoReal(m2centraldb);

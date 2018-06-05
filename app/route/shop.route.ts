@@ -37,9 +37,7 @@ let adminApi = {
     //邦为业务
     m2Login: "/admin/m2-login" //邦为登录
   }
-}
-
-
+};
 
 let shopApi = {
   /**
@@ -86,7 +84,19 @@ let shopApi = {
    * 获取商户的今日业绩统计
    * ?shop_id
    */
-  getShopBussiness: "/api/shop/bussiness"
+  getShopBussiness: "/api/shop/bussiness",
+  /**
+   * post
+   * query: ?employee_id&shop_id
+   *body:IEmployeee
+   */
+  updateEmployee: "/api/shop/employee/update",
+  /**
+   * post
+   * ? shop_id
+   * body:{lat_lng}
+   */
+  updateShopLocation: "/api/shop/location/update"
 };
 
 module.exports = (app: Application) => {
@@ -100,7 +110,6 @@ module.exports = (app: Application) => {
     .get(shopApi.employeeDepartmentCategory, shop.getShopEmployeeDepartment)
     .get(shopApi.employeeJobCategory, shop.getShopEmployeeJobCategory)
     .get(shopApi.getShopBussiness, shop.getShopTodayCustomers)
-
 
     .get(adminApi.systemModule.getModuleAll, shop.getModuleAll)
     .get(adminApi.systemModule.getModulePage, shop.getModulePage)
@@ -121,33 +130,18 @@ module.exports = (app: Application) => {
 
     .post(adminApi.systemModule.createCategroy, shop.createCategroy)
     .post(adminApi.systemModule.deleteCategroy, shop.deleteCategroy)
-    .get(
-      adminApi.systemModule.getArticleTypePage,
-      shop.getArticleTypePage
-    )
-    .get(
-      adminApi.systemModule.GetArticlesPage,
-      shop.GetArticlesPage
-    )
-    .get(
-      adminApi.systemModule.getArticleTypeAll,
-      shop.getArticleTypeAll
-    )
+    .get(adminApi.systemModule.getArticleTypePage, shop.getArticleTypePage)
+    .get(adminApi.systemModule.GetArticlesPage, shop.GetArticlesPage)
+    .get(adminApi.systemModule.getArticleTypeAll, shop.getArticleTypeAll)
     .post(adminApi.systemModule.createArticles, shop.createArticles)
     .post(adminApi.systemModule.updateCategroy, shop.updateCategroy)
     .get(adminApi.systemModule.getCommonPage, shop.getCommonPage)
     .post(adminApi.systemModule.createCommon, shop.createCommon)
-    .post(
-      adminApi.systemModule.recommandArticle,
-      shop.recommandArticle
-    )
+    .post(adminApi.systemModule.recommandArticle, shop.recommandArticle)
     .post(adminApi.systemModule.updateArticles, shop.updateArticles)
     .post(adminApi.systemModule.passArticle, shop.passArticle)
-    .post(
-      adminApi.systemModule.refuseArticle,
-      shop.recommandArticle
-    )
+    .post(adminApi.systemModule.refuseArticle, shop.recommandArticle)
+    .post(shopApi.updateEmployee, shop.updateEmployee);
   // 邦为业务
   //.post(adminApi.systemModule.m2Login, controller.m2Admin.m2Login);
 };
-

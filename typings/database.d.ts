@@ -19,6 +19,7 @@ interface IOSSFile {
 
 interface IEmployee {
   shop_id: number;
+  role_id: number;
   employee_id?: number;
   department: string;
   job: string;
@@ -134,24 +135,24 @@ interface IEmployee {
  */
 interface IShop {
   shop_id?: number;
-  shop_name: string;
-  telphone: string;
-  boss_mobi: string;
-  qq: string;
-  phone: string;
-  password: string;
+  shop_name?: string;
+  telphone?: string;
+  boss_mobi?: string;
+  qq?: string;
+  phone?: string;
+  password?: string;
   /**
    * 省份
    */
-  region: string;
+  region?: string;
   /**
    * 市
    */
-  city: string;
+  city?: string;
   /**
    * 区
    */
-  addr: string;
+  addr?: string;
 
   /**
    * 推荐人id

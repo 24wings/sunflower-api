@@ -141,7 +141,8 @@ module.exports = (app: Application) => {
     .post(adminApi.systemModule.updateArticles, shop.updateArticles)
     .post(adminApi.systemModule.passArticle, shop.passArticle)
     .post(adminApi.systemModule.refuseArticle, shop.recommandArticle)
-    .post(shopApi.updateEmployee, shop.updateEmployee);
+    .post(shopApi.updateEmployee, shop.updateEmployee)
+    .post(shopApi.updateShopLocation, shop.updateShopLocation);
   // 邦为业务
   //.post(adminApi.systemModule.m2Login, controller.m2Admin.m2Login);
 };

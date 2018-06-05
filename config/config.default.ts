@@ -85,7 +85,7 @@ export default (appInfo: EggAppConfig) => {
   config.security = {
     protocolWhiteList: ["http"],
     // origin: "*",
-    domainWhiteList: ["www.airuanjian.vip", "open.weixin.qq.com", "localhost", "localhost:4200"],
+    domainWhiteList: ["www.airuanjian.vip", "open.weixin.qq.com", "http://localhost", "localhost:4200"],
     allowMethods: ["GET", "HEAD", "PUT", "POST", "DELETE", "PATCH", "OPTIONS"],
     xframe: {
       enable: false

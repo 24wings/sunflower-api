@@ -6,9 +6,11 @@ import db = require("../model");
 
 export default class Shop extends Controller {
   async updateShopLocation() {
+    let { lat_lng } = this.ctx.request.body;
+    let { shop_id } = this.ctx.query;
     let updateAction = await db.shop.update(
-      { lat_lng: this.ctx.request.body.lat_lng },
-      { where: { shop_id: this.ctx.query.shop_id } }
+      { lat_lng },
+      { where: { shop_id } }
     );
     this.ctx.body = { ok: true, data: updateAction };
   }

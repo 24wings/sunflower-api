@@ -14,7 +14,7 @@ export default (appInfo: EggAppConfig) => {
   // app special config
   config.sourceUrl = `https://github.com/eggjs/examples/tree/master/${
     appInfo.name
-    }`;
+  }`;
 
   // override config from framework / plugin
   // use for cookie sign key, should change to your own and keep security
@@ -85,7 +85,13 @@ export default (appInfo: EggAppConfig) => {
   config.security = {
     protocolWhiteList: ["http"],
     // origin: "*",
-    domainWhiteList: ["www.airuanjian.vip", "open.weixin.qq.com", "http://localhost", "localhost:4200"],
+    domainWhiteList: [
+      "www.airuanjian.vip",
+      "open.weixin.qq.com",
+      "http://localhost",
+      "localhost:4200",
+      "manage.airuanjian.vip"
+    ],
     allowMethods: ["GET", "HEAD", "PUT", "POST", "DELETE", "PATCH", "OPTIONS"],
     xframe: {
       enable: false
